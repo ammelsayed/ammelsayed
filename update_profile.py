@@ -10,8 +10,8 @@ import urllib.request
 from datetime import date, datetime, timezone
 
 USER = "A.M.M. Elsayed"
-BIRTHDAY = date(2002, 12, 09)
-JOINED_YEAR = 2023  # account creation year, never changes
+BIRTHDAY = date(2002, 12, 9)
+JOINED_YEAR = 2022  # account creation year, never changes
 W = 56  # info column width in characters
 
 ART = r"""
