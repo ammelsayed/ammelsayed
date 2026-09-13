@@ -181,7 +181,6 @@ def info_lines(s):
         kv("OS", "Linux, Windows, macOS"),
         kv("Uptime", f"{y} years, {m} months, {d} days"),
         kv("Position", "Particle Physicist"),
-        kv("Working at", "USTC"),
         kv("IDE", "Cursor, VS Code"),
         [],
         kv("Languages.Programming", "Python, C/C++, JavaScript"),
