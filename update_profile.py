@@ -102,6 +102,8 @@ def fetch_stats():
         repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY]) {{
           totalCount
         }}
+        prsMerged: pullRequests(states: MERGED) {{ totalCount }}
+        prsOpened: pullRequests {{ totalCount }}
       }}
     }}""", token=PRIV_TOKEN)["user"]
     stats = {
@@ -110,6 +112,9 @@ def fetch_stats():
         "contributed": u["repositoriesContributedTo"]["totalCount"],
         "stars": sum(n["stargazerCount"] for n in u["repositories"]["nodes"]),
         "commits": commits,
+        # no states = open+closed+merged, i.e. every PR ever opened
+        "prs_merged": u["prsMerged"]["totalCount"],
+        "prs_opened": u["prsOpened"]["totalCount"],
     }
     stats.update(loc([n["name"] for n in u["repositories"]["nodes"] if not n["isFork"]], u["id"]))
     return stats
@@ -195,6 +200,7 @@ def info_lines(s):
         rule("GitHub Stats"),
         kv2("Repos", f"{s['repos']} {{Contributed: {s['contributed']}}}", "Stars", n(s["stars"])),
         kv2("Commits", n(s["commits"]), "Followers", n(s["followers"])),
+        kv2("PRs Opened", n(s["prs_opened"]), "PRs Merged", n(s["prs_merged"])),
         [("Lines of Code: ", "k"), (n(s["loc"]), "v"), (" ( ", "d"),
          (n(s["loc_add"]) + "++", "g"), (", ", "d"), (n(s["loc_del"]) + "--", "r"), (" )", "d")],
     ]
